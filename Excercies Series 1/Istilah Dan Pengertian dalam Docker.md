@@ -14,11 +14,42 @@ Image adalah suatu blueprint / template isinya sebuah perintah dan ketergantunga
 
 Anggapannya adalah seperti container sebuah makanan instant yang tinggal dihangatkan, sedangkan kalau image adalah resep untuk membuat makanan instant tersebut, jadi image itu instruksi dan bahan bahanya untuk membuat container, nanti container tersebut tinggal dijalankan saja.
 
+Seperti Zip itu adalah image sedangkan setelah anda extract isinya yaitu containernya.
+
+"Build Once Run Anywhere".
+
+### Keuntungan Menggunakan Docker
+1. Portable
+2. Lightweight
+3. Greater Efficiency
+4. Platform Independent
+5. Secure
+6. Cost Effective
+
+### Docker Feature
+1. Overlay File System : jadi bisa tracking setiap perubahan dari layer ( kayak git gitu konsepnya)
+2. Namespaces :  to provide the isolated workspace called the container
+3. Control Group : a feature of the Linux kernel that allow you to limit the access processes and containers have to system resources such as CPU, RAM, IOPS and network dan bisa juga beradaptasi sesuai kebutuhannya
+   * jika VM setelah resource di alokasikan maka tidak bisa di bagikan lagi ( intinya diambil dan ndak dibagi lagi selain untuk VM)
+
+### Docker Architecture
+1. Client : merupakan interface untuk berinteraksi dengan docker Daemon
+2. DOCKER_HOST : Merupakan Komputer yang menjalankan containernya
+3. Registry : Merupakan Repository : Docker Hub
+4. Docker Daemon : Merupakan Docker Engine yang memange docker image, container, network, dan volumes.
+
+![eb60da915fdccfeeb8c25311f1d8c162.png](./eb60da915fdccfeeb8c25311f1d8c162.png)
+
+#### Extra
+Portainer adalah management docker didalam docker, jadi kita dapat memanage dalam jarak jauh *deploy dan dll![6876deedc221691557dedf6eb1458047.png](./6876deedc221691557dedf6eb1458047.png)
+
 ### Image 
+"_Image adalah suatu blueprint / template isinya sebuah perintah dan ketergantungan software didalamnya untuk dijalankan oleh
+kontainer_."
+
 sebuah image tidak bisa diubah setelah dibuat jadi jika ingin mengubahnya bisa dengan mengupdatenya kembali menggunakan _dockerfile_ dan dibuat menggunakan command `docker image build`
 
 contoh sebuah _dockerfile_ :
-
 ```
 FROM <image>:<tag>
 RUN <install some dependencies>
@@ -31,11 +62,39 @@ CMD <command that is executed on `docker container run`>
 ![5d3d6804a5cf3dcf103eafff7b55fc39.png](./5d3d6804a5cf3dcf103eafff7b55fc39.png "5d3d6804a5cf3dcf103eafff7b55fc39.png")
 
  jadi _dockerimage_ juga sebuah resep untuk membuat image, sedangkan image merupakan resep untuk membuat container.
- 
+
+ Kadang dalam image, menggunakan alpine linux sebagai base OSnya karena sangat ringan.
+
+#### Snapshot
+_A docker that **allows you to create snapshots (copies) of the current document, and to return to these states** afterwards._
+
+Important note: _Always treat your **docker** images/containers as something you can blow off easily and recreate from scratch_
+
+#### Templates
+
+#### Extra
+BusyBox merupakaan kumpulan unix ultilities as single executable : [Busybox Introduction](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjGy722odyEAxWP4zgGHbKiDawQFnoECBsQAw&url=https%3A%2F%2Fsiddhivinayak-sk.medium.com%2Fbusybox-the-developers-swiss-army-knife-for-embedded-linux-98c312ac5843&usg=AOvVaw0AK21nZkiaHm7gmdamgHKO&opi=89978449)
+
+_BusyBox **provides independent, or extra, tools to those installed on the system**. For example, BusyBox's ash may be used in place of the system ash shell, or even be used if no other ash is installed._
+
+isinya ada webserver, diagnosa jaringan, dll. cocok untuk dalam keadaan tertentu seperti test
+
+docker repo :[BusyBox Docker](https://hub.docker.com/_/busybox)
+make docker images form running container : [link](https://www.howtogeek.com/devops/how-to-create-a-docker-image-from-a-running-container/)
+
 ### Container
 Setiap Container beriskan aplikasi beserta kebutuhanya (_dependencies_), container bisa dihentikan, dimulai, dan dinteraksi.
 
  untuk menjalankan container bisa dilakukan dengan `docker run <your-image>`, jika image yang ditujukan tidak ada maka akan mengunduhnya terlebih dahulu
+
+#### [Container Layers](https://docs.docker.com/build/guide/layers/)	
+![d809c9ec15a28844015da74e7012e73a.png](./d809c9ec15a28844015da74e7012e73a.png)
+https://stackoverflow.com/questions/31222377/what-are-docker-image-layers
+	
+_The order of Dockerfile instructions matters. A Docker build consists of a series of ordered build instructions. Each instruction in a Dockerfile roughly translates to an image layer._
+![5024c03e267848b98d13875c38b8aef3.png](./5024c03e267848b98d13875c38b8aef3.png)
+
+tambahan note :  [Cached layers](https://docs.docker.com/build/guide/layers/#cached-layers)
 
 #### Menjalankan Container
 
